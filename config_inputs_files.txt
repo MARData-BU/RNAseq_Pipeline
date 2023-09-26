@@ -1,0 +1,29 @@
+merge: FALSE
+QC: TRUE
+alignment: TRUE
+quantification: TRUE
+
+project_directory: /bicoh/MARGenomics/20230905_JYelamos_RNAseq
+project_analysis: /bicoh/MARGenomics/20230905_JYelamos_RNAseq/Analysis
+functions: /bicoh/MARGenomics/Pipelines/RNASeq/functions
+fastq_directory: /bicoh/MARGenomics/20230905_JYelamos_RNAseq/rawData
+batch_num: 1
+batch_folder: NA
+fastq_suffix: .fastq.gz
+lanes: 1
+
+total_output_files: NA
+sample_sheet: NA
+
+STAR_reference_genome_GTF: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human/gencode.v41.primary_assembly.annotation.gtf
+STAR_reference_genome_FLAT: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human/gencode.v41.flatFile
+STAR_reference_genome_RIBOSOMAL_INTERVALS: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human/gencode.v41.ribosomal.interval_list
+STAR_annot_gene: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human
+STAR_genome_dir: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_STAR/Idx_Gencode_v41_hg38_readlength75
+run1_suffix: _1.fq.gz
+paired_end: TRUE
+
+frw_stranded: FALSE
+unstranded: TRUE
+reversely_stranded: FALSE
+fastqscreen_config: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_Bowtie2/fastq_screen.conf
