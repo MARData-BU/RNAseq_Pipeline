@@ -339,14 +339,47 @@ then
 
     echo -e "\n\nCompressing FASTQ files...\n\n"
 
-    count=`ls -l $FASTQDIR/*.fastq | wc -l`
-    while [ $count != $TOTAL_OUT ] # check whether ALL the files corresponding to every sample are created or not
-    do
-        sleep 5 # wait if not
-        count=`ls -l $FASTQDIR/*.fastq | wc -l` # check again
-    done
+    if ls $FASTQDIR/*.fastq >/dev/null 2>&1
+    then
+        count=`ls -l $FASTQDIR/*.fastq | wc -l`
+        echo $(ls -l $FASTQDIR)
+        while [ $count != $num_samples ] # check whether ALL the files corresponding to every sample are created or not
+        do
+          sleep 5 # wait if not
+          count=`ls -l $FASTQDIR/*.fastq | wc -l` # check again
+          echo "The number of fastq files is $count"
+          echo $(ls -l $FASTQDIR)
+      done
+    else
+        sleep 300
+        count=`ls -l $FASTQDIR/*.fastq | wc -l`
+        echo $(ls -l $FASTQDIR)
+        while [ $count != $num_samples ] # check whether ALL the files corresponding to every sample are created or not
+        do
+          sleep 5 # wait if not
+          count=`ls -l $FASTQDIR/*.fastq | wc -l` # check again
+          echo "The number of fastq files is $count"
+          echo $(ls -l $FASTQDIR)
+      done
+    fi
+
+    echo "All done"
+    echo $count
+
+    sleep 300
 
     gzip $FASTQDIR/*.fastq
+
+    count=`ls -l $FASTQDIR/*.fastq.gz | wc -l` # check again
+    echo "The number of fastq.gz files is $count."
+
+    while [ $count != $num_samples ] # check whether ALL the files have been compressed
+    do
+        gzip $FASTQDIR/*.fastq
+        count=`ls -l $FASTQDIR/*.fastq.gz | wc -l` # check again
+        echo "The number of fastq.gz files is $count"
+    done
+
 
     echo -e "\n\nFastQ Files compressed\n\n"
 fi
