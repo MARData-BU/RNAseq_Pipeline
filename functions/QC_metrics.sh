@@ -44,10 +44,9 @@ multiqc . -f -o $QC/multiQC
 if [ $END == SINGLE ]
     then 
     R=1 # single-end
-    elif [ $END == PAIRED]
+    elif [ $END == PAIRED ]
         then
         R=2 # paired-end
-    fi
 fi
 
 Rscript $FUNCTIONSDIR/table4QCpresentation.R $QC $LANES $R $RUNSUFFIX # QC dir, numer of lanes, paired end, color for duplications
