@@ -50,18 +50,23 @@ if(R == 1){
     samples=unique(gsub("(read1|read2)","",table$Sample))
   } else if (grepl("*R1*", runsuffix)){
     samples=unique(gsub("(R1|R2)","",table$Sample))
-  } else if (grepl("*1*", runsuffix)){
+  } else if (grepl("*_1*", runsuffix)){
     samples=unique(gsub("_*(1|2)$","",table$Sample))
+  } else if (grepl("*_01*", runsuffix)){
+    samples=unique(gsub("_*(01|02)$","",table$Sample))
+  } else if (grepl("*_001*", runsuffix)){
+    samples=unique(gsub("_*(001|002)$","",table$Sample))
   }
 }
+
+samples <- gsub("__", "_", samples) # in case there are double underscores
 
 #samples=unique(gsub("_S.*_L00.*_R.*_001","",table$Sample)) # UPF
 #samples=unique(gsub("_.*_read[12]","",table$Sample)) # CRG
 
 # Prepare table
 df=data.frame(matrix(NA,ncol = R*lanes,nrow=length(samples)))
-#colnames(df)=c("R1_L001","R2_L001","R1_L002","R2_L002","R1_L003","R2_L003","R1_L004","R2_L004")
-colnames(df)=paste0(paste0("L00",1:lanes),paste0("R",1:R))
+
 x=outer(paste0("R",1:R), paste0("L00",1:lanes), FUN = "paste",sep="_")
 dim(x) <- NULL
 colnames(df)=x
