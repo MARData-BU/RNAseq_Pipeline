@@ -34,7 +34,7 @@ Any other version of inputing data (such as project_directory:/bicoh/MARGenomics
   are the batch_folder variable pasted with 1:batch_num (e.g: if batch_num is 3 and bat_folder is FITOMON_0, the batch folders will be considered as FITOMON_01, FITOMON_02 and FITOMON_03). If you have only one batch
   and they are not stored in any folder rather than within the fastq_directory, please leave this variable as 'NA' or 'FALSE'.
   - fastq_suffix: suffix for the fastq files (usually .fastq.gz or .fq.gz).
-  - lanes: number of lanes (1, 2, 3...). Only used for the generation of the table4QCpresentation.xlsx.
+  - lanes: number of lanes (1, 2, 3...) AFTER the merge. Only used for the generation of the table4QCpresentation.xlsx. If lanes are merged or else the data has NO lanes, this parameter must be 1. 
 
   ################
   MERGE PARAMETERS
