@@ -19,7 +19,7 @@ general_stats = general_stats[,c("Sample", "featureCounts_mqc.generalstats.featu
 
 colnames(general_stats) = c("Sample", "% Assigned", "M Assigned", "% Aligned", "M Aligned", "% Dups", "% GC", "Total Seqs") # rename columns
 
-NGS_summary = general_stats[!grepl("_[12]$", general_stats$Sample), ] # return a logical vector indicating whether each element in the "Sample" column ends with "R1" or "R2". If a string ends with either "R1" or "R2", the corresponding element in the logical vector will be TRUE, otherwise FALSE.
+NGS_summary = general_stats[!grepl("(_[12]$|_0[12]$|_00[12]$)", general_stats$Sample), ] # return a logical vector indicating whether each element in the "Sample" column ends with "_1/_01/_001" or "_2/_02/_002". If a string ends with either "R1" or "R2", the corresponding element in the logical vector will be TRUE, otherwise FALSE.
 # With the previous regexpression we create a table with only the samples and NOT the reads R1-R2
 
 
@@ -27,8 +27,8 @@ NGS_summary = general_stats[!grepl("_[12]$", general_stats$Sample), ] # return a
 for(row in NGS_summary$Sample){
   
   reads = grep(row, general_stats$Sample, value = T)
-  R1 = grep("_1", reads, value = T)
-  R2 = grep("_2", reads, value = T)
+  R1 = grep("_1", reads, value = T)[1]
+  R2 = grep("_2", reads, value = T)[1]
 
   # Get the mean duplications per sample
   dups = (general_stats[general_stats$Sample == R1, "% Dups"] + general_stats[general_stats$Sample == R2, "% Dups"])/2
