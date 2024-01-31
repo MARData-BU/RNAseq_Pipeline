@@ -322,6 +322,8 @@ then
     #############                            #############
     ######################################################
     "
+    echo -e "\n\nCreating the fastq directory where the merged files will be stored..."
+    mkdir -p $FASTQDIR
     echo -e "\n\nCreating the script to concatenate the FASTQ files...\n\n"
 
     sbatch $FUNCTIONSDIR/create_merge_file.sh $FUNCTIONSDIR $SAMPLE_SHEET $WD
@@ -339,32 +341,31 @@ then
 
     echo -e "\n\nCompressing FASTQ files...\n\n"
 
-    if ls $FASTQDIR/*.fastq >/dev/null 2>&1
+    if ls $FASTQDIR/*.fastq >/dev/null 2>&1 # check whether there is any .fastq file
     then
         count=`ls -l $FASTQDIR/*.fastq | wc -l`
         echo $(ls -l $FASTQDIR)
-        while [ $count != $num_samples ] # check whether ALL the files corresponding to every sample are created or not
+        while [ $count != $TOTAL_OUT ] # check whether ALL the files corresponding to every sample are created or not
         do
-          sleep 5 # wait if not
+          sleep 100 # wait if not
           count=`ls -l $FASTQDIR/*.fastq | wc -l` # check again
           echo "The number of fastq files is $count"
           echo $(ls -l $FASTQDIR)
       done
     else
-        sleep 300
+        sleep 300 # if there is no fastq file, sleep for 300 seconds so some fastq file will be generated
         count=`ls -l $FASTQDIR/*.fastq | wc -l`
         echo $(ls -l $FASTQDIR)
-        while [ $count != $num_samples ] # check whether ALL the files corresponding to every sample are created or not
+        while [ $count != $TOTAL_OUT ] # check whether ALL the files corresponding to every sample are created or not
         do
-          sleep 5 # wait if not
+          sleep 100 # wait if not
           count=`ls -l $FASTQDIR/*.fastq | wc -l` # check again
-          echo "The number of fastq files is $count"
+          echo "The number of fastq files is $count and it should be $TOTAL_OUT"
           echo $(ls -l $FASTQDIR)
       done
     fi
 
-    echo "All done"
-    echo $count
+    echo "All done, there are a total of $count fastq files and it should be $TOTAL_OUT"
 
     sleep 300
 
@@ -373,11 +374,11 @@ then
     count=`ls -l $FASTQDIR/*.fastq.gz | wc -l` # check again
     echo "The number of fastq.gz files is $count."
 
-    while [ $count != $num_samples ] # check whether ALL the files have been compressed
+    while [ $count != $TOTAL_OUT ] # check whether ALL the files have been compressed
     do
         gzip $FASTQDIR/*.fastq
         count=`ls -l $FASTQDIR/*.fastq.gz | wc -l` # check again
-        echo "The number of fastq.gz files is $count"
+          echo "The number of fastq files is $count and it should be $TOTAL_OUT"
     done
 
 
