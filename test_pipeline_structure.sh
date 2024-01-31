@@ -86,9 +86,9 @@ If MERGE is set to TRUE (if fastq files have to be merged), please note that the
   -RUNSUFFIX (run1_suffix) in the 'config_input_files.txt' must be defined accordingly to the output names that you define. Other options will make the pipeline fail.
   -The Excel file 'sample_sheet.xlsx' must be populated with
       >(1) the paths and names of the fastq.gz files and
-      >(2) the paths and names in which merged files will be stored. If there are >1 batches and merged files are to be stored in different folders, please consider so when populating the path.
-      Also please consider this when populating the variables -batch_num- and -batch_folder- from the 'config_input_files.txt'; if merged data is stored in different folderes according to the batch,
-      variables -batch_num- and -batch_folder- must be filled accordingly. The number of batches must correspond to the number of batch folders that are generated AFTER the merge.
+      >(2) the paths and names in which merged files will be stored. If there are >1 batches to be merged, note that ALL merged samples must be stored within the same folder, which will correspond to
+      the FASTQDIR variable. Please consider so when populating the path. Also please consider this when populating the variables -batch_num- and -batch_folder- from the 'config_input_files.txt', which
+      will need to be 1 and NA respectively.
       >It is possible to leave empty cells within a row, and also to add new columns, but note that the output path/name must ALWAYS be the last populated column of the spreadsheet, that it
       must be the same column for all rows even though empty spaces are left in some (but not all) rows, and that it must be named 'Output_name'.
       >Column names can be modified with the exception of 'Output_name' column (which MUST be the last column). Please, do NOT modify the name of this column or else the pipeline will not run.
