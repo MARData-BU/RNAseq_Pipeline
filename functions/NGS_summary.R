@@ -7,7 +7,7 @@ batch <- args[2]
 library(openxlsx)
 library(stringr)
 
-multiqc = file.path(wd, "QC/multiQC")
+multiqc = file.path(wd, paste0("QC/", batch, "/multiQC"))
 
 general_stats = read.table(file = file.path(multiqc, "/multiqc_data/multiqc_general_stats.txt"), sep = "\t", header = T)
 
