@@ -15,8 +15,9 @@ END=$2
 LANES=$3
 RUNSUFFIX=$4
 FUNCTIONSDIR=$5
+folder=$6
 
-QC=${PROJECT}/QC
+QC=${PROJECT}/QC/${folder}
 
 # Load modules
 #------------------
