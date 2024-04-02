@@ -10,6 +10,7 @@
 FUNCTIONSDIR=$1
 PROJECT=$2
 WD=$3
+batch=$4
 
 #=================================#
 # Create NGS_Summary table        #
@@ -17,4 +18,4 @@ WD=$3
 cd $WD
 
 module load R/4.1.2-foss-2020b
-Rscript $FUNCTIONSDIR/NGS_summary.R $PROJECT
+Rscript $FUNCTIONSDIR/NGS_summary.R $PROJECT $batch
