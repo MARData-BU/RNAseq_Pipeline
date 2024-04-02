@@ -29,5 +29,6 @@ cd $PROJECT/QC
 module load Python/3.8.6-GCCcore-10.2.0 # més actualitzat a dia 31/Jan/2023
 
 echo -e "Running multiqc...\n"
-multiqc . -o $PROJECT/QC/multiQC -f
+multiqc . -o $PROJECT/QC/multiQC/${folder} -f
 echo -e "Process performed!\n"
+
