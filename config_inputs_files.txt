@@ -1,15 +1,15 @@
 merge: FALSE
-QC: TRUE
-alignment: TRUE
+QC: FALSE
+alignment: FALSE
 quantification: TRUE
 
-project_directory: /bicoh/MARGenomics/20230905_JYelamos_RNAseq
-project_analysis: /bicoh/MARGenomics/20230905_JYelamos_RNAseq/Analysis
+project_directory: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA
+project_analysis: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/Analysis
 functions: /bicoh/MARGenomics/Pipelines/RNASeq/functions
-fastq_directory: /bicoh/MARGenomics/20230905_JYelamos_RNAseq/rawData
+fastq_directory: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/rawData
 batch_num: 1
-batch_folder: NA
-fastq_suffix: .fastq.gz
+batch_folder: TEST
+fastq_suffix: .fq.gz
 lanes: 1
 
 total_output_files: NA
@@ -23,7 +23,4 @@ STAR_genome_dir: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_STAR/Idx_Gencode
 run1_suffix: _1.fq.gz
 paired_end: TRUE
 
-frw_stranded: FALSE
-unstranded: TRUE
-reversely_stranded: FALSE
 fastqscreen_config: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_Bowtie2/fastq_screen.conf
