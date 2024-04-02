@@ -15,13 +15,14 @@ module load Subread/2.0.3 # més actualitzat a 31/JAN/2023
 PROJECT=$1
 folder=$2
 STAR_GTF=$3
-STRAND=$4
+FUNCTIONSDIR=$4
+STRAND=$5
 
 BAMDIR=$PROJECT/Analysis/ReadMapping/BAM_Files/${folder}
 OUTDIR=$PROJECT/Analysis/Quantification/CountFiles/${folder}
 
-echo "The bam dir is $BAMDIR and the output dir is $OUTDIR.
-Strandness is $STRAND (0 for unstranded, 1 for stranded, 2 for reversely stranded)."
+echo -e "The bam dir is $BAMDIR and the output dir is $OUTDIR."
+echo -e "Strandness is $STRAND (0 for unstranded, 1 for stranded, 2 for reversely stranded)."
 
 mkdir -p $OUTDIR
 
