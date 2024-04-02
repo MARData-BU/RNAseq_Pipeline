@@ -16,8 +16,8 @@ Any other version of inputing data (such as project_directory:/bicoh/MARGenomics
   ################
   STEPS TO PERFORM
   ################
-  -  merge: whether you require to merge your data before processing (for >1 lane) (TRUE/FALSE).
-  -  quality: whether to compute the quality check(TRUE/FALSE).
+  - merge: whether you require to merge your data before processing (for >1 lane) (TRUE/FALSE).
+  - quality: whether to compute the quality check(TRUE/FALSE).
   - alignment: whether to compute the alignment (TRUE/FALSE).
   - quantification: whether to compute the quantification (TRUE/FALSE).
 
@@ -56,8 +56,7 @@ Any other version of inputing data (such as project_directory:/bicoh/MARGenomics
   QUANTIFICATION VARIABLES
   ########################
   - frw_stranded: whether your RNAseq is stranded (TRUE) or not (FALSE).
-  - unstranded: whether your RNAseq is unstranded (TRUE) or not (FALSE).
-  - reversely_stranded: whether your RNAseq is reversely-stranded (TRUE) or not (FALSE).
+  - Strandness will be automatically set by the pipeline.
   - fastqscreen_config: fastQScreen configuration (e.g: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_Bowtie2/fastq_screen.conf).
 
 Also please consider the following points when populating the config_input_files.txt and before running the pipeline:
@@ -69,7 +68,6 @@ Also please consider the following points when populating the config_input_files
       - The parameter -batch_num- refers to the number of batches your data has.
       - The parameter -batch_folder- refers to the PREFIX of your batch folders. This pipeline will consider the prefix and then add the numbers from 1 to batch_num as batch folder names
       (e.g: if -batch_num- is set to 3 and -batch_folder- to 'BATCH_0', the batch folders through which the pipeline will iterate will be 'BATCH_01', 'BATCH_02' and 'BATCH_03').
-  - If quantification needs to be run, please define one of the three following parameters as TRUE depending on your data (RNA strandness): -unstranded-, -stranded- or -reversely_stranded-.
   - Please read and check the SET PARAMETERS section once you have launched the pipeline in the logs.out file to ensure that all your parameters have been set correctly. This logs.out document
   will be stored within a logs folder generated in the -project_analysis- path.
 
