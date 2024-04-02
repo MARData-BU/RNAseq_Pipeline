@@ -28,7 +28,7 @@ OUTDIR=$PROJECT/QC/${folder}/FastQC
 #--------------------
 # Prapare input files
 
-FASTQFILES=($(ls -1 $FASTQDIR/*$FASTQ_SUFFIX))
+FASTQFILES=($(ls -1 $FASTQDIR/${folder}/*$FASTQ_SUFFIX))
 i=$(($SLURM_ARRAY_TASK_ID - 1))
 INFILE=${FASTQFILES[i]}
 echo -e "Analyzing sample $INFILE.\n"
