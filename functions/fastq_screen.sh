@@ -35,7 +35,7 @@ echo -e"The output directory is $OUTDIR.\n"
 #--------------------
 # Prapare input files
 
-FASTQFILES=($(ls -1 $FASTQDIR/*$FASTQ_SUFFIX))
+FASTQFILES=($(ls -1 $FASTQDIR/${folder}/*$FASTQ_SUFFIX))
 i=$(($SLURM_ARRAY_TASK_ID - 1)) ## bash arrays are 0-based
 INFILE=${FASTQFILES[i]}
 echo -e "Processing file $INFILE.\n"
