@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p long   # Partition to submit to
+#SBATCH -p long,bigmem   # Partition to submit to
 #SBATCH --cpus-per-task=10	#change to 5 if no rush or cluster is full
 #SBATCH --mem-per-cpu 9Gb      # Memory in MB
 #SBATCH -J STAR                # job name
