@@ -60,5 +60,5 @@ echo -e "Scripts sent. They will be launched once FastQC scripts have finished.\
 #=================#
 #   MultiQC       #
 #=================#
-sbatch --dependency=afterok:${FASTQC},${FASTQSCREEN} $FUNCTIONSDIR/QC_metrics.sh $PROJECT $END $LANES $RUNSUFFIX $FUNCTIONSDIR
+sbatch --dependency=afterok:${FASTQC},${FASTQSCREEN} $FUNCTIONSDIR/QC_metrics.sh $PROJECT $END $LANES $RUNSUFFIX $FUNCTIONSDIR $folder
 echo -e "MultiQC job sent. It will be run once the FASTQC and FASTQSCREEN jobs have finished. \n"
