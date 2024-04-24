@@ -514,9 +514,10 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
 
       until [ -f $PROJECT/Analysis/Quantification/Strandness_check/$folder/Strandness_check_out.tsv ]
         do
-        sleep 10 # wait 5 seconds if the file has not been created yet
-        done
-
+        echo -e "Strandness_check_out.tsv has not been generated yet. Sleeping for 20 seconds..."
+        sleep 20 # wait 20 seconds if the file has not been created yet        
+      done
+      echo -e "Sleeping 500 seconds so the file Strandness_check_out.tsv is properly filled..."
       sleep 500 # give time for the file to be filled
 
       conclusions=$(awk -F'\t' '{if(NR>1 && $5 != "") print $5}' $PROJECT/Analysis/Quantification/Strandness_check/$folder/Strandness_check_out.tsv)
@@ -549,4 +550,6 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
     fi
   done
 fi
+
+
 
