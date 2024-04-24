@@ -74,4 +74,8 @@ addWorksheet(wb, "NGS_summary")
 writeData(wb, "NGS_summary", NGS_summary,  rowNames = F)
 addStyle(wb, sheet = "NGS_summary", headerStyle, rows = 1, cols = 1:ncol(NGS_summary), gridExpand = TRUE)
 setColWidths(wb, sheet = "NGS_summary", cols =4:5, widths = 16)
-saveWorkbook(wb, file.path(wd, paste0("/Analysis/NGS_summary_", batch, ".xlsx")), overwrite = TRUE)
+if(batch == "/"){
+  saveWorkbook(wb, file.path(wd, paste0("/Analysis/NGS_summary", ".xlsx")), overwrite = TRUE)
+} else{
+  saveWorkbook(wb, file.path(wd, paste0("/Analysis/NGS_summary_", batch, ".xlsx")), overwrite = TRUE)
+}
