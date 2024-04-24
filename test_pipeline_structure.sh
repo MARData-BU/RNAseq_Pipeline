@@ -447,8 +447,17 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
       mkdir -p $PROJECT/Analysis/Quantification/Strandness_check/${folder}
 
       BAMDIR=$PROJECT/Analysis/ReadMapping/BAM_Files/${folder}
-      BAMFILES=($(ls -1 $BAMDIR/*.bam))
-      length_files=$(ls -1 "$BAMDIR"/*.bam | wc -l)
+
+      if ls $BAMDIR/*.bam >/dev/null 2>&1 # check whether there is any .bam file (if alignment is being performed, there might not be any yet)
+      then
+        BAMFILES=($(ls -1 $BAMDIR/*.bam))
+        length_files=$(ls -1 "$BAMDIR"/*.bam | wc -l)
+      else
+        echo -e "Sleeping for 30 minutes so .bam files are generated..."
+        sleep 1800 # give time so the bam files are generated
+        BAMFILES=($(ls -1 $BAMDIR/*.bam))
+        length_files=$(ls -1 "$BAMDIR"/*.bam | wc -l)
+      fi
 
       CHECK_STRANDNESS=$(sbatch --dependency=afterok:${STAR} --parsable --array=1-$length_files "$FUNCTIONSDIR/check_strandness.sh" "$BAMDIR" "$FUNCTIONSDIR" "$PROJECT" "$folder")
 
@@ -456,9 +465,10 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
 
       until [ -f $PROJECT/Analysis/Quantification/Strandness_check/$folder/Strandness_check_out.tsv ]
         do
-        sleep 10 # wait 5 seconds if the file has not been created yet
+        echo -e "Strandness_check_out.tsv has not been generated yet. Sleeping for 20 seconds..."
+        sleep 20 # wait 20 seconds if the file has not been created yet
         done
-
+      echo -e "Sleeping 500 seconds so the file Strandness_check_out.tsv is properly filled..."
       sleep 500 # give time for the file to be filled
 
       conclusions=$(awk -F'\t' '{if(NR>1 && $5 != "") print $5}' $PROJECT/Analysis/Quantification/Strandness_check/$folder/Strandness_check_out.tsv)
