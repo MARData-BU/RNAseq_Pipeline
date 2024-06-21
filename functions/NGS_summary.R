@@ -31,6 +31,11 @@ for(row in NGS_summary$Sample){
   R1 = grep("_1", reads, value = T)[1]
   R2 = grep("_2", reads, value = T)[1]
 
+  if(is.na(R1)|is.na(R2)){
+    R1 = grep("R1_001", reads, value = T)[1]
+    R2 = grep("R2_001", reads, value = T)[1]
+  }
+  
   # Get the mean duplications per sample
   dups = (general_stats[general_stats$Sample == R1, "% Dups"] + general_stats[general_stats$Sample == R2, "% Dups"])/2
   NGS_summary[NGS_summary$Sample == row, "% Dups"] = dups
