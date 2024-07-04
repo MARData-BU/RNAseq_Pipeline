@@ -373,8 +373,9 @@ if [ "$QC" == "TRUE" ]; then
       echo -e "\n\nPerforming QC analysis for batch $folder.\n\n"
       # FASTQC and  FASTQSCREEN
       echo -e "\n\nLaunching QC loop...\n\n"
-      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX"
+      QC_loop_job=$(sbatch --parsable "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX")
       echo -e "\n\nQC jobs sent to the cluster.\n\n"
+      sbatch --dependency=afterok:${QC_loop_job} $FUNCTIONSDIR/QC_metrics.sh "$PROJECT" "$END" "$LANES" "$RUNSUFFIX" "$FUNCTIONSDIR" "$folder"
     done
 
   elif [ "$END" == "PAIRED" ]; then
@@ -384,10 +385,11 @@ if [ "$QC" == "TRUE" ]; then
       echo -e "\n\nPerforming QC analysis for batch $folder.\n\n"
       # FASTQC and  FASTQSCREEN
       echo -e "\n\nLaunching QC loop for R1 samples...\n\n"
-      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX"
+      QC_loop_job_R1=$(sbatch --parsable "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX")
       echo -e "\n\nLaunching QC loop for R2 samples...\n\n"
-      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R2" "$END" "$LANES" "$RUNSUFFIX"
+      QC_loop_job_R2=$(sbatch --parsable "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R2" "$END" "$LANES" "$RUNSUFFIX")
       echo -e "\n\nQC jobs sent to the cluster.\n\n"
+      sbatch --dependency=afterok:${QC_loop_job_R1},${QC_loop_job_R2} $FUNCTIONSDIR/QC_metrics.sh "$PROJECT" "$END" "$LANES" "$RUNSUFFIX" "$FUNCTIONSDIR" "$folder"
     done
 
   fi
