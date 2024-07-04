@@ -52,12 +52,3 @@ fi
 
 Rscript $FUNCTIONSDIR/table4QCpresentation.R $QC $LANES $R $RUNSUFFIX # QC dir, numer of lanes, paired end, color for duplications
 
-
-#====================================#
-# Add new RUN metrics to BATCH excel #
-#====================================#
-
-# No aplica ja que no hi ha batches en aquest cas
-
-# RUN=/
-# Rscript $DIR/QC/${BATCH}/excelQC_addRUNtoBATCH.R ${DIR}/QC/${BATCH} $BATCH $RUN
