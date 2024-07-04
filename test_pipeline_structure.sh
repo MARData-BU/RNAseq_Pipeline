@@ -367,19 +367,37 @@ echo -e "
 ######################################################
 "
 
-if [ $QC == TRUE ]
-  then
-    for folder in "${folders[@]}"; do
-    echo -e "\n\nPerforming QC analysis for batch $folder.\n\n"
-    # FASTQC and  FASTQSCREEN
-    echo -e "\n\nLaunching QC loop...\n\n"
-    sbatch $FUNCTIONSDIR/QC_loop_and_metrics.sh $PROJECT $FASTQDIR $FUNCTIONSDIR $folder $FASTQSCREEN_CONFIG $FASTQ_SUFFIX $END $LANES $RUNSUFFIX
-    echo -e "\n\nQC job sent to the cluster.\n\n"
-  done
+if [ "$QC" == "TRUE" ]; then
+  if [ "$END" == "SINGLE" ]; then
+    echo -e "This is a single-end experiment. RUN1 will be considered as ${R1}. If this is not the case for your data, please check code and inputs file."
 
-  else
-    echo -e "\n\nQC will not be performed.\n\n"
+    for folder in "${folders[@]}"; do
+      echo -e "\n\nPerforming QC analysis for batch $folder.\n\n"
+      # FASTQC and  FASTQSCREEN
+      echo -e "\n\nLaunching QC loop...\n\n"
+      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX"
+      echo -e "\n\nQC jobs sent to the cluster.\n\n"
+    done
+
+  elif [ "$END" == "PAIRED" ]; then
+    echo -e "This is a paired-end experiment. RUN1 will be considered as ${R1} and RUN2 as ${R2}. If this is not the case for your data, please check code and inputs file.\n"
+
+    for folder in "${folders[@]}"; do
+      echo -e "\n\nPerforming QC analysis for batch $folder.\n\n"
+      # FASTQC and  FASTQSCREEN
+      echo -e "\n\nLaunching QC loop for R1 samples...\n\n"
+      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R1" "$END" "$LANES" "$RUNSUFFIX"
+      echo -e "\n\nLaunching QC loop for R2 samples...\n\n"
+      sbatch "$FUNCTIONSDIR/QC_loop_and_metrics.sh" "$PROJECT" "$FASTQDIR" "$FUNCTIONSDIR" "$folder" "$FASTQSCREEN_CONFIG" "$R2" "$END" "$LANES" "$RUNSUFFIX"
+      echo -e "\n\nQC jobs sent to the cluster.\n\n"
+    done
+
+  fi
+
+else
+  echo -e "\n\nQC will not be performed.\n\n"
 fi
+
 
 ######################################################
 #############                            #############
@@ -399,12 +417,9 @@ if [ "$ALIGNMENT" == "TRUE" ]; then
   echo -e "\n\nRunning STAR and picard...\n\n"
 
   if [ "$END" == "SINGLE" ]; then
-    R1="$RUNSUFFIX"
-    echo -e "RUN1 will be considered as ${R1}."
+    echo -e "This is a single-end experiment. RUN1 will be considered as ${R1}. If this is not the case for your data, please check code and inputs file."
   elif [ "$END" == "PAIRED" ]; then
-    R1="$RUNSUFFIX"
-    R2="${RUNSUFFIX/R1/R2}" # Use string substitution to replace "R1" with "R2" in the $RUNSUFFIX variable
-    echo -e "RUN1 will be considered as ${R1} and RUN2 as ${R2}. If this is not the case for your data, please check code and STAR logs output.\n"
+    echo -e "This is a paired-end experiment. RUN1 will be considered as ${R1} and RUN2 as ${R2}. If this is not the case for your data, please check code and inputs file.\n"
   fi
 
   for folder in "${folders[@]}"; do
