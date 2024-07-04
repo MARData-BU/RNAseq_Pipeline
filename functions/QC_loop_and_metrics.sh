@@ -57,8 +57,19 @@ echo -e "Directory created.\n"
 FASTQSCREEN=$(sbatch --array=1-$(ls -l $FASTQDIR/${folder}/*$FASTQ_SUFFIX | wc -l) --dependency=afterok:${FASTQC} --parsable $FUNCTIONSDIR/fastq_screen.sh $PROJECT $folder $FASTQDIR $FUNCTIONSDIR $FASTQSCREEN_CONFIG $FASTQ_SUFFIX)
 echo -e "Scripts sent. They will be launched once FastQC scripts have finished.\n"
 
-#=================#
-#   MultiQC       #
-#=================#
-sbatch --dependency=afterok:${FASTQC},${FASTQSCREEN} $FUNCTIONSDIR/QC_metrics.sh $PROJECT $END $LANES $RUNSUFFIX $FUNCTIONSDIR $folder
-echo -e "MultiQC job sent. It will be run once the FASTQC and FASTQSCREEN jobs have finished. \n"
+#==================#
+#   Waiting loop   #
+#==================#
+
+check_jobs() {
+    squeue -j ${FASTQC},${FASTQSCREEN} > /dev/null 2>&1
+    return $?
+}
+
+echo -e "Entering wait loop to monitor jobs.\n"
+while check_jobs; do
+    echo -e "Jobs are still running. Sleeping for 100 seconds...\n"
+    sleep 100
+done
+
+echo -e "All jobs have finished.\n"
