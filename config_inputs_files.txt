@@ -9,7 +9,6 @@ functions: /bicoh/MARGenomics/Pipelines/RNASeq/functions
 fastq_directory: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/rawData
 batch_num: 1
 batch_folder: TEST
-fastq_suffix: .fq.gz
 lanes: 1
 
 total_output_files: NA
