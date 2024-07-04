@@ -41,7 +41,6 @@ Any other version of inputing data (such as project_directory:/bicoh/MARGenomics
   - bat_folder: batch name (only if batch_num is 1; e.g: FITOMON_01) or else batch prefix (only if batch_num >1; e.g: FITOMON_0). In this second case (batch_num > 1), the pipeline will assume that the batch folders
   are the batch_folder variable pasted with 1:batch_num (e.g: if batch_num is 3 and bat_folder is FITOMON_0, the batch folders will be considered as FITOMON_01, FITOMON_02 and FITOMON_03). If you have only one batch
   and they are not stored in any folder rather than within the fastq_directory, please leave this variable as 'NA' or 'FALSE'.
-  - fastq_suffix: suffix for the fastq files (usually .fastq.gz or .fq.gz).
   - lanes: number of lanes (1, 2, 3...) AFTER the merge. Only used for the generation of the table4QCpresentation.xlsx. If lanes are merged or else the data has NO lanes, this parameter must be 1. 
 
   ################
@@ -126,7 +125,6 @@ FUNCTIONSDIR=$(grep functions: $PARAMS | awk '{ print$2 }')
 FASTQDIR=$(grep fastq_directory: $PARAMS | awk '{ print$2 }')
 BATCH=$(grep batch_num: $PARAMS | awk '{ print$2 }')
 BATCH_FOLDER=$(grep batch_folder: $PARAMS | awk '{ print$2 }')
-FASTQ_SUFFIX=$(grep fastq_suffix: $PARAMS | awk '{ print$2 }')
 LANES=$(grep lanes: $PARAMS | awk '{ print$2 }')
 
 # Merge parameters
