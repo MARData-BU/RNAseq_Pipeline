@@ -235,14 +235,7 @@ else
   echo -e "RNA end has been defined as $END END."
 fi
 
-if [ "$ALIGNMENT" == "TRUE" ]; then
-  echo -e "\nFor the alignment, the parameters set are:\n"
-  echo "- The STAR GTF file is: $STAR_GTF."
-  echo "- The STAR FLAT file is: $STAR_FLAT."
-  echo "- The STAR RIBO file is: $STAR_RIBO."
-  echo "- The STAR directory is: $STAR_DIR."
-
-  if [ $END == SINGLE ]
+if [ $END == SINGLE ]
     then
     R1=$RUNSUFFIX
 
@@ -264,7 +257,13 @@ if [ "$ALIGNMENT" == "TRUE" ]; then
       echo "RUN1 suffix will be considered as ${R1} and RUN2 as ${R2} for this analysis."
     fi
   fi
-
+  
+if [ "$ALIGNMENT" == "TRUE" ]; then
+  echo -e "\nFor the alignment, the parameters set are:\n"
+  echo "- The STAR GTF file is: $STAR_GTF."
+  echo "- The STAR FLAT file is: $STAR_FLAT."
+  echo "- The STAR RIBO file is: $STAR_RIBO."
+  echo "- The STAR directory is: $STAR_DIR."
 fi
 
 echo -e "\n The FastQScreen config path is $FASTQSCREEN_CONFIG."
