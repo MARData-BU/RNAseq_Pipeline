@@ -62,8 +62,14 @@ echo -e "Scripts sent. They will be launched once FastQC scripts have finished.\
 #==================#
 
 check_jobs() {
-    squeue -j ${FASTQC},${FASTQSCREEN} > /dev/null 2>&1
-    return $?
+    # Check if the output of squeue is empty
+    if [[ -z $(squeue -h -j ${FASTQC},${FASTQSCREEN}) ]]; then
+        # If it is empty, return a failure (non-zero)
+        return 1
+    else
+        # If it is not empty, return a success (zero)
+        return 0
+    fi
 }
 
 echo -e "Entering wait loop to monitor jobs.\n"
