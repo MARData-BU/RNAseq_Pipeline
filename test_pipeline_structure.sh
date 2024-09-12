@@ -135,6 +135,7 @@ STAR_RIBO=$(grep STAR_reference_genome_RIBOSOMAL_INTERVALS: $PARAMS | awk '{ pri
 STAR_DIR=$(grep STAR_genome_dir: $PARAMS | awk '{ print$2 }')
 RUNSUFFIX=$(grep run1_suffix: $PARAMS | awk '{ print$2 }')
 PAIRED=$(grep paired_end: $PARAMS | awk '{ print$2 }')
+strand_annotation=$(grep strand_annotation: $PARAMS | awk '{ print$2 }')
 
 # Quantification parameters
 FASTQSCREEN_CONFIG=$(grep fastqscreen_config: $PARAMS | awk '{ print$2 }')
@@ -470,7 +471,7 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
         length_files=$(ls -1 "$BAMDIR"/*.bam | wc -l)
       fi
 
-      CHECK_STRANDNESS=$(sbatch --dependency=afterok:${STAR} --parsable --array=1-$length_files "$FUNCTIONSDIR/check_strandness.sh" "$BAMDIR" "$FUNCTIONSDIR" "$PROJECT" "$folder")
+      CHECK_STRANDNESS=$(sbatch --dependency=afterok:${STAR} --parsable --array=1-$length_files "$FUNCTIONSDIR/check_strandness.sh" "$BAMDIR" "$FUNCTIONSDIR" "$PROJECT" "$folder" "$strand_annotation")
 
       STRANDNESS_OUT=$(sbatch --dependency=afterok:${CHECK_STRANDNESS} --parsable "$FUNCTIONSDIR/strandness_out.sh" "$PROJECT" "$WD" "$folder" "$FUNCTIONSDIR")
 
@@ -519,7 +520,7 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
       BAMFILES=($(ls -1 $BAMDIR/*.bam))
       length_files=$(ls -1 "$BAMDIR"/*.bam | wc -l)
 
-      CHECK_STRANDNESS=$(sbatch --parsable --array=1-$length_files "$FUNCTIONSDIR/check_strandness.sh" "$BAMDIR" "$FUNCTIONSDIR" "$PROJECT" "$folder")
+      CHECK_STRANDNESS=$(sbatch --parsable --array=1-$length_files "$FUNCTIONSDIR/check_strandness.sh" "$BAMDIR" "$FUNCTIONSDIR" "$PROJECT" "$folder" "$strand_annotation")
 
       STRANDNESS_OUT=$(sbatch --dependency=afterok:${CHECK_STRANDNESS} --parsable "$FUNCTIONSDIR/strandness_out.sh" "$PROJECT" "$WD" "$folder" "$FUNCTIONSDIR")
 
