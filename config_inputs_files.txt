@@ -21,5 +21,6 @@ STAR_annot_gene: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human
 STAR_genome_dir: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_STAR/Idx_Gencode_v41_hg38_readlength75
 run1_suffix: _1.fq.gz
 paired_end: TRUE
+strand_annotation: /bicoh/MARGenomics/AnalysisFiles/Annot_files_GTF/Human/gencode.v38.primary_assembly.annotation.bed
 
 fastqscreen_config: /bicoh/MARGenomics/AnalysisFiles/Index_Genomes_Bowtie2/fastq_screen.conf
