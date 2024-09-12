@@ -15,7 +15,7 @@ FUNCTIONSDIR=$2
 PROJECT=$3
 folder=$4
 OUTDIR=$PROJECT/Analysis/Quantification/Strandness_check/${folder}
-annotation=/genomics/users/marta/genomes/Annot_files_GTF/gencode.v38.primary_assembly.annotation_gene.bed
+annotation=$5
 
 echo -e "The bam directory is $BAMDIR."
 echo -e "The functions directory is $FUNCTIONSDIR."
