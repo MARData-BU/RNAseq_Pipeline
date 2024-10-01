@@ -504,7 +504,7 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
           echo -e "Unable to determine strandness."
       fi
 
-      FEATURECOUNTS=$(sbatch --parsable "$FUNCTIONSDIR/feature.counts_new.sh" "$PROJECT" "$folder" "$STAR_GTF" "$FUNCTIONSDIR" "$STRAND")
+      FEATURECOUNTS=$(sbatch --parsable "$FUNCTIONSDIR/feature.counts_new.sh" "$PROJECT" "$folder" "$STAR_GTF" "$FUNCTIONSDIR" "$STRAND" "$PAIRED")
       echo "Submitted FEATURECOUNTS job with ID: ${FEATURECOUNTS}"
 
       MULTIQC=$(sbatch --dependency=afterok:${FEATURECOUNTS} --parsable "$FUNCTIONSDIR/ReadMapping_multiqc.sh" "$folder" "$PROJECT")
@@ -553,7 +553,7 @@ if [ "$QUANTIFICATION" == "TRUE" ]; then
           echo -e "Unable to determine strandness."
       fi
 
-      FEATURECOUNTS=$(sbatch --parsable "$FUNCTIONSDIR/feature.counts_new.sh" "$PROJECT" "$folder" "$STAR_GTF" "$FUNCTIONSDIR" "$STRAND")
+      FEATURECOUNTS=$(sbatch --parsable "$FUNCTIONSDIR/feature.counts_new.sh" "$PROJECT" "$folder" "$STAR_GTF" "$FUNCTIONSDIR" "$STRAND" "$PAIRED")
       echo "Submitted FEATURECOUNTS job with ID: ${FEATURECOUNTS}"
 
       MULTIQC=$(sbatch --dependency=afterok:${FEATURECOUNTS} --parsable "$FUNCTIONSDIR/ReadMapping_multiqc.sh" "$folder" "$PROJECT")
