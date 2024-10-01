@@ -17,6 +17,7 @@ folder=$2
 STAR_GTF=$3
 FUNCTIONSDIR=$4
 STRAND=$5
+PAIRED=$6
 
 BAMDIR=$PROJECT/Analysis/ReadMapping/BAM_Files/${folder}
 OUTDIR=$PROJECT/Analysis/Quantification/CountFiles/${folder}
@@ -28,6 +29,14 @@ mkdir -p $OUTDIR
 
 INPUT=`ls $BAMDIR/*.bam | paste -sd " " -`
 
-featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -p -t exon --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
+if [ $PAIRED == TRUE ]
+then
+# Paired end
+  featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -p -t --countReadPairs exon --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
+else
+# NOT paired end
+  featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -t exon --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
+fi
+
 
 # el 0 després de la s defineix es unstranded, mentre que 1 es stranded i 2 reversely stranded
