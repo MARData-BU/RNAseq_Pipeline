@@ -5,7 +5,7 @@ quantification: TRUE
 
 project_directory: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA
 project_analysis: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/Analysis
-functions: /bicoh/MARGenomics/Pipelines/RNASeq/functions
+functions: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/Analysis/functions
 fastq_directory: /bicoh/MARGenomics/20230801_RdelaTorre_MDierssen_PENSA/rawData
 batch_num: 1
 batch_folder: TEST
