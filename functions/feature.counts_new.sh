@@ -32,7 +32,7 @@ INPUT=`ls $BAMDIR/*.bam | paste -sd " " -`
 if [ $PAIRED == TRUE ]
 then
 # Paired end
-  featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -p -t --countReadPairs exon --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
+  featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -p -t exon --countReadPairs --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
 else
 # NOT paired end
   featureCounts -T $SLURM_CPUS_PER_TASK -s $STRAND -t exon --largestOverlap -g gene_name -a $STAR_GTF -o $OUTDIR/CountsTable.txt $INPUT
