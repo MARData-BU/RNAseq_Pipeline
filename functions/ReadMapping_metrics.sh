@@ -31,7 +31,7 @@ cd $QC
 #  Manual summary
 #=================#
 
-OUTDIR=$PROJECT/Analysis/ReadMapping/BAM_Files/{$folder}
+OUTDIR=$PROJECT/Analysis/ReadMapping/BAM_Files/${folder}
 touch $OUTDIR/TotalCounts_Alignment
 
 for i in $OUTDIR/*.final.out; do basename $i >> $OUTDIR/TotalCounts_Alignment; \
