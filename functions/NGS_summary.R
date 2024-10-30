@@ -20,7 +20,7 @@ general_stats = general_stats[,c("Sample", "featureCounts_mqc.generalstats.featu
 
 colnames(general_stats) = c("Sample", "% Assigned", "M Assigned", "% Aligned", "M Aligned", "% Dups", "% GC", "Total Seqs") # rename columns
 
-NGS_summary = general_stats[!grepl("(_[12]$|_0[12]$|_00[12]$)", general_stats$Sample), ] # return a logical vector indicating whether each element in the "Sample" column ends with "_1/_01/_001" or "_2/_02/_002". If a string ends with either "R1" or "R2", the corresponding element in the logical vector will be TRUE, otherwise FALSE.
+NGS_summary = general_stats[!grepl("(_[12]$|_R[12]$|_0[12]$|_00[12]$)", general_stats$Sample), ] # return a logical vector indicating whether each element in the "Sample" column ends with "_1/_01/_001" or "_2/_02/_002". If a string ends with either "R1" or "R2", the corresponding element in the logical vector will be TRUE, otherwise FALSE.
 # With the previous regexpression we create a table with only the samples and NOT the reads R1-R2
 
 
@@ -32,8 +32,8 @@ for(row in NGS_summary$Sample){
   R2 = grep("_2", reads, value = T)[1]
 
   if(is.na(R1)|is.na(R2)){
-    R1 = grep("R1_001", reads, value = T)[1]
-    R2 = grep("R2_001", reads, value = T)[1]
+    R1 = grep("R1", reads, value = T)[1]
+    R2 = grep("R2", reads, value = T)[1]
   }
   
   # Get the mean duplications per sample
